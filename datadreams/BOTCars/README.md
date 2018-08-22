@@ -18,3 +18,12 @@
 
 ## 数据说明
 
+![ecars trainning data](/images/ecars.jpg)
+
+![rcars trainning data](/images/rcars.jpg)
+
+![dicitionary 1](/images/dict1.jpg)
+
+![dicitionary 2](/images/dict2.jpg)
+
+![test samples](/images/test_samples.jpg)
