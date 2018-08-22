@@ -27,3 +27,8 @@
 ![dicitionary 2](./images/dict2.jpg)
 
 ![test samples](./images/test_samples.jpg)
+
+
+### 比赛地址
+
+http://www.datadreams.org/#/raceDetail/raceSummary?raceid=120
