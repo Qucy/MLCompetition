@@ -32,3 +32,8 @@
 ### 比赛地址
 
 http://www.datadreams.org/#/raceDetail/raceSummary?raceid=120
+
+
+### 历史天气获取地址
+
+http://tianqi.2345.com/
