@@ -34,6 +34,10 @@
 http://www.datadreams.org/#/raceDetail/raceSummary?raceid=120
 
 
-### 历史天气获取地址
+### 其他信息
 
-http://tianqi.2345.com/
+#### 风力等级
+![dicitionary 2](./images/wind_level.jpg)
+
+#### 能见度等级
+![test samples](./images/visibility_level.jpg)
