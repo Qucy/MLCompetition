@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #allmap {
+            height: 90%;
+            width: 100%;
+        }
+
+        #r-result {
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=iInUiMDAKjb4zGdndbQfhOkae8rtnGu9"></script>
+    <title>添加/删除覆盖物</title>
+</head>
+
+<body>
+    <div id="allmap"></div>
+    <div id="r-result">
+        <input type="button" onclick="add_overlay();" value="添加覆盖物" />
+        <input type="button" onclick="remove_overlay();" value="删除覆盖物" />
+        经度: <input id="longitude" type="text" style="width:100px; margin-right:10px;"/>
+        纬度: <input id="latitude" type="text" style="width:100px; margin-right:10px;" />
+        <input type="button" value="查询" onclick="theLocation()" />
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(121.55, 31.22);
+    map.centerAndZoom(point, 13);
+
+    var pStart = new BMap.Point(121.315, 31.315);
+    var pEnd = new BMap.Point(121.775, 31.15);
+
+    var totalLng = pEnd.lng - pStart.lng
+    var totalLat = pStart.lat - pEnd.lat
+
+    var rectangle = new BMap.Polygon([
+        new BMap.Point(pStart.lng, pStart.lat),
+        new BMap.Point(pEnd.lng, pStart.lat),
+        new BMap.Point(pEnd.lng, pEnd.lat),
+        new BMap.Point(pStart.lng, pEnd.lat)
+    ], { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 });  //创建矩形
+
+    var rectangles = [];
+    //rectangles.push(rectangle);
+
+    // WSG84 Coordinate sysstem
+    /*var grid = [
+        [1., 31.195, 31.2, 121.315, 121.32],
+        [2., 31.22, 31.225, 121.355, 121.36],
+        [3., 31.26, 31.265, 121.485, 121.49],
+        [4., 31.15, 31.155, 121.51, 121.515],
+        [5., 31.19, 31.195, 121.77, 121.775],
+        [6., 31.23, 31.235, 121.37, 121.375],
+        [7., 31.22, 31.225, 121.41, 121.415],
+        [8., 31.15, 31.155, 121.48, 121.485],
+        [9., 31.265, 31.27, 121.485, 121.49],
+        [10., 31.205, 31.21, 121.55, 121.555],
+        [11., 31.21, 31.215, 121.57, 121.575],
+        [12., 31.17, 31.175, 121.34, 121.345],
+        [13., 31.19, 31.195, 121.36, 121.365],
+        [14., 31.225, 31.23, 121.37, 121.375],
+        [15., 31.26, 31.265, 121.39, 121.395],
+        [16., 31.185, 31.19, 121.42, 121.425],
+        [17., 31.18, 31.185, 121.435, 121.44],
+        [18., 31.29, 31.295, 121.435, 121.44],
+        [19., 31.245, 31.25, 121.465, 121.47],
+        [20., 31.29, 31.295, 121.505, 121.51],
+        [21., 31.205, 31.21, 121.515, 121.52],
+        [22., 31.29, 31.295, 121.515, 121.52],
+        [23., 31.31, 31.315, 121.53, 121.535],
+        [24., 31.185, 31.19, 121.355, 121.36],
+        [25., 31.195, 31.2, 121.375, 121.38],
+        [26., 31.2, 31.205, 121.39, 121.395],
+        [27., 31.205, 31.21, 121.4, 121.405],
+        [28., 31.235, 31.24, 121.405, 121.41],
+        [29., 31.21, 31.215, 121.41, 121.415],
+        [30., 31.19, 31.195, 121.415, 121.42],
+        [31., 31.195, 31.2, 121.415, 121.42],
+        [32., 31.25, 31.255, 121.43, 121.435],
+        [33., 31.255, 31.26, 121.43, 121.435],
+        [34., 31.26, 31.265, 121.435, 121.44],
+        [35., 31.225, 31.23, 121.44, 121.445],
+        [36., 31.26, 31.265, 121.44, 121.445],
+        [37., 31.23, 31.235, 121.445, 121.45],
+        [38., 31.26, 31.265, 121.45, 121.455],
+        [39., 31.27, 31.275, 121.45, 121.455],
+        [40., 31.235, 31.24, 121.455, 121.46],
+        [41., 31.235, 31.24, 121.46, 121.465],
+        [42., 31.24, 31.245, 121.46, 121.465],
+        [43., 31.245, 31.25, 121.46, 121.465],
+        [44., 31.225, 31.23, 121.465, 121.47],
+        [45., 31.27, 31.275, 121.465, 121.47],
+        [46., 31.235, 31.24, 121.475, 121.48],
+        [47., 31.275, 31.28, 121.475, 121.48],
+        [48., 31.28, 31.285, 121.475, 121.48],
+        [49., 31.235, 31.24, 121.48, 121.485],
+        [50., 31.3, 31.305, 121.505, 121.51]];*/
+
+    // BD-09 Coordinate system
+    var grid = [
+      [1., 121.32591,31.19939,121.33093,31.20440],
+      [2., 121.36616,31.22395,121.37119,31.22888],
+      [3., 121.49607,31.26373,121.50106,31.26868],
+      [4., 121.52095,31.15364,121.52591,31.15870],
+      [5., 121.78083,31.19404,121.78580,31.19913],
+      [6., 121.38124,31.23380,121.38625,31.23879],
+      [7., 121.42114,31.22425,121.42612,31.22934],
+      [8., 121.49105,31.15375,121.49605,31.15867],
+      [9., 121.49606,31.26873,121.50105,31.27368],
+      [10., 121.56068,31.20918,121.56567,31.21419],
+      [11., 121.58066,31.21408,121.58568,31.21900],
+      [12., 121.35102,31.17416,121.35605,31.17908],
+      [13., 121.37116,31.19386,121.37619,31.19881],
+      [14., 121.38123,31.22880,121.38625,31.23379],
+      [15., 121.40122,31.26391,121.40620,31.26899],
+      [16., 121.43106,31.18938,121.43604,31.19444],
+      [17., 121.44601,31.18448,121.45100,31.18946],
+      [18., 121.44601,31.29453,121.45101,31.29951],
+      [19., 121.47606,31.24910,121.48107,31.25399],
+      [20., 121.51598,31.29367,121.52095,31.29871],
+      [21., 121.52593,31.20873,121.53089,31.21381],
+      [22., 121.52591,31.29376,121.53087,31.29884],
+      [23., 121.54080,31.31401,121.54577,31.31909],
+      [24., 121.36613,31.18892,121.37116,31.19386],
+      [25., 121.38622,31.19877,121.39123,31.20379],
+      [26., 121.40121,31.20388,121.40620,31.20896],
+      [27., 121.41118,31.20905,121.41616,31.21415],
+      [28., 121.41617,31.23917,121.42115,31.24426],
+      [29., 121.42113,31.21424,121.42611,31.21933],
+      [30., 121.42609,31.19432,121.43107,31.19939],
+      [31., 121.42609,31.19932,121.43107,31.20440],
+      [32., 121.44105,31.25451,121.44604,31.25952],
+      [33., 121.44105,31.25951,121.44603,31.26452],
+      [34., 121.44603,31.26452,121.45102,31.26950],
+      [35., 121.45104,31.22949,121.45604,31.23445],
+      [36., 121.45103,31.26450,121.45602,31.26946],
+      [37., 121.45604,31.23445,121.46104,31.23938],
+      [38., 121.46103,31.26439,121.46603,31.26931],
+      [39., 121.46102,31.27439,121.46602,31.27931],
+      [40., 121.46605,31.23930,121.47106,31.24420],
+      [41., 121.47106,31.23920,121.47607,31.24410],
+      [42., 121.47106,31.24420,121.47606,31.24910],
+      [43., 121.47105,31.24921,121.47606,31.25410],
+      [44., 121.47607,31.22909,121.48108,31.23399],
+      [45., 121.47604,31.27410,121.48105,31.27900],
+      [46., 121.48608,31.23889,121.49109,31.24380],
+      [47., 121.48606,31.27890,121.49106,31.28381],
+      [48., 121.48605,31.28390,121.49105,31.28881],
+      [49., 121.49109,31.23880,121.49608,31.24372],
+      [50., 121.51598,31.30367,121.52095,31.30871]];
+
+    for (let index = 0; index < grid.length; index++) {
+        const row = grid[index];
+
+        let pStart = new BMap.Point(row[1], row[2]);
+        let pEnd = new BMap.Point(row[3], row[4]);
+
+        const subReg = new BMap.Polygon([
+            new BMap.Point(pStart.lng, pStart.lat),
+            new BMap.Point(pEnd.lng, pStart.lat),
+            new BMap.Point(pEnd.lng, pEnd.lat),
+            new BMap.Point(pStart.lng, pEnd.lat)
+        ], { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 });
+
+        const label = new BMap.Label(row[0], {
+            position: new BMap.Point(pStart.lng, pStart.lat),
+            offset: new BMap.Size(0, 0)
+        });
+        label.setStyle({
+            color: "red",
+            fontSize: "10px",
+            height: "10px",
+            lineHeight: "10px",
+            fontFamily: "微软雅黑"
+        });
+
+        rectangles.push(subReg);
+        rectangles.push(label);
+    }
+
+
+    var biggerGrid = [];
+    var x = 6;
+    var y = 13;
+    console.log(totalLat)
+    console.log(totalLng)
+    console.log(totalLat/y)
+    console.log(totalLng/y)
+
+    var label = 100
+    for(let index = 0; index < x; index++) {
+        for(let index2 = 0; index2 < y; index2++) {
+            let sgrid = [];
+            sgrid.push(label++);
+            sgrid.push(pEnd.lat + index*totalLat/x);
+            sgrid.push(pEnd.lat + (index+1)*totalLat/x);
+            sgrid.push(pStart.lng + index2*totalLng/y);
+            sgrid.push(pStart.lng + (index2+1)*totalLng/y);
+            biggerGrid.push(sgrid);
+        }
+    }
+
+    /*for (let index = 0; index < biggerGrid.length; index++) {
+        const row = biggerGrid[index];
+
+        let pStart = new BMap.Point(row[3], row[1]);
+        let pEnd = new BMap.Point(row[4], row[2]);
+
+        const subReg = new BMap.Polygon([
+            new BMap.Point(pStart.lng, pStart.lat),
+            new BMap.Point(pEnd.lng, pStart.lat),
+            new BMap.Point(pEnd.lng, pEnd.lat),
+            new BMap.Point(pStart.lng, pEnd.lat)
+        ], { strokeColor: "green", strokeWeight: 2, strokeOpacity: 0.5 });
+
+        const label = new BMap.Label(row[0], {
+            position: new BMap.Point(pStart.lng, pStart.lat),
+            offset: new BMap.Size(0, 0)
+        });
+        label.setStyle({
+            color: "red",
+            fontSize: "10px",
+            height: "10px",
+            lineHeight: "10px",
+            fontFamily: "微软雅黑"
+        });
+
+        rectangles.push(subReg);
+        rectangles.push(label);
+    }*/
+
+    //添加覆盖物
+    function add_overlay() {
+        rectangles.forEach(function (item, index, array) {
+            map.addOverlay(item);         //增加矩形
+        });
+    }
+    //清除覆盖物
+    function remove_overlay() {
+        map.clearOverlays();
+    }
+    map.enableScrollWheelZoom(true);
+
+    function theLocation() {
+        if (document.getElementById("longitude").value != "" && document.getElementById("latitude").value != "") {
+            map.clearOverlays();
+            var new_point = new BMap.Point(document.getElementById("longitude").value, document.getElementById("latitude").value);
+            var marker = new BMap.Marker(new_point);  // 创建标注
+            map.addOverlay(marker);              // 将标注添加到地图中
+            map.panTo(new_point);
+        }
+    }
+</script>
