@@ -68,4 +68,6 @@
 * 训练 运行nohup python main_train.py -mn your_model_name & 训练模型并保存，同时通过日志可以得到验证集的F1_score指标
 * 预测 运行nohup python main_predict.py -mn your_model_name $ 通过加载上一步的模型，在测试集上做预测
 
+Base Line repo
+---
 [AI Challenger git repo](https://github.com/AIChallenger)
