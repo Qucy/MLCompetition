@@ -71,3 +71,7 @@
 Base Line repo
 ---
 [AI Challenger git repo](https://github.com/AIChallenger)
+
+Other Information
+---
+[Word2Vec tutorial](http://mccormickml.com/tutorials/)
