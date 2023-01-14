@@ -25,3 +25,6 @@ Your work will help online retailers select more relevant items from a vast rang
 - [How to build a GBT ranker Model](https://www.kaggle.com/competitions/otto-recommender-system/discussion/370210)
 - [Recommendation system for large dataset](https://www.kaggle.com/competitions/otto-recommender-system/discussion/364721)
 - [Andrew NG - recommendation system](https://www.youtube.com/watch?v=giIXNoiqO_U&list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN&index=98)
+
+
+### 3 - Our approach
