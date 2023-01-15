@@ -24,7 +24,7 @@
 
 ### 03 - OTTO Recommendation
 
-
+- Understand recommendation system
 
 
 
