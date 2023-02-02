@@ -3,3 +3,8 @@ saved_models/
 __pycache__/
 .ipynb_checkpoints/
 *DS_Store
+*csv
+*zip
+*pgt
+*parquet
+*npy
