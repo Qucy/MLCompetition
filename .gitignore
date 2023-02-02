@@ -2,6 +2,9 @@ data/
 saved_models/
 __pycache__/
 .ipynb_checkpoints/
+Kaggle/otto_multi_objective_recommender_system/co_visitation_matrix/*
+Kaggle/otto_multi_objective_recommender_system/model/*
+Kaggle/otto_multi_objective_recommender_system/val_co_visitation_matrix/*
 *DS_Store
 *csv
 *zip
